@@ -8,7 +8,7 @@ Na pasta _arquivos_ ficam os arquivos adicionais gerados nas atividades, com ext
 ## atividades_aulas
 Na pasta _atividades_aulas_ ficam os arquivos com extensão .py com o código fonte das atividades realizadas nas aulas.
 
-## [projetos](#Projetos)
+## [projetos](#projetos-1)
 Na pasta _projetos_ ficam os projetos que foram realizados no curso, são atividades com aplicação real.
 
 # Projetos
