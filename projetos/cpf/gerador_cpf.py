@@ -24,7 +24,7 @@ while True:
     cpf_validado += str(digito_2)
 
     print(f'CPF Gerado {cpf_validado}')
-    
+
     if input('Deseja gerar mais um CPF? (S ou N) ').upper() == 'N':
         break
     

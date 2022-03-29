@@ -1,0 +1,7 @@
+ERROR: Xiaomi Mi 9 SE não está ligado
+INFO: Xiaomi Mi 9 SE ESTÁ CONECTADO.
+ERROR: Xiaomi Mi 9 SE JÁ ESTÁ CONECTADO.
+ERROR: Xiaomi Mi 9 SE JÁ ESTÁ CONECTADO.
+ERROR: Xiaomi Mi 9 SE não está ligado
+INFO: Xiaomi Mi 9 SE foi deligado com sucesso.
+ERROR: Xiaomi Mi 9 SE NÃO ESTÁ CONECTADO.
