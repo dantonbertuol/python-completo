@@ -25,3 +25,51 @@ pessoas = [
 ]
 
 lista = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+clientes_dicionario = {
+    1: {
+        'nome': 'Danton',
+        'sobrenome': 'Jose',
+        'idade': 25,
+        'altura': 1.80,
+        'peso': 80.53,
+    },
+    2: {
+        'nome': 'Mari',
+        'sobrenome': 'Santini',
+        'idade': 52,
+        'altura': 1.67,
+        'peso': 57,
+    },
+    3: {
+        'nome': 'Mauro',
+        'sobrenome': 'Bertuol',
+        'idade': 32,
+        'altura': 1.95,
+        'peso': 113,
+    },
+}
+
+clientes_json = """{
+    "1": {
+        "nome": "Danton",
+        "sobrenome": "Jose",
+        "idade": 25,
+        "altura": 1.8,
+        "peso": 80.53
+    },
+    "2": {
+        "nome": "Mari",
+        "sobrenome": "Santini",
+        "idade": 52,
+        "altura": 1.67,
+        "peso": 57
+    },
+    "3": {
+        "nome": "Mauro",
+        "sobrenome": "Bertuol",
+        "idade": 32,
+        "altura": 1.95,
+        "peso": 113
+    }
+}"""

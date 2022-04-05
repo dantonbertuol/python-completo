@@ -1,0 +1,23 @@
+{
+    "1": {
+        "nome": "Danton",
+        "sobrenome": "Jose",
+        "idade": 25,
+        "altura": 1.8,
+        "peso": 80.53
+    },
+    "2": {
+        "nome": "Mari",
+        "sobrenome": "Santini",
+        "idade": 52,
+        "altura": 1.67,
+        "peso": 57
+    },
+    "3": {
+        "nome": "Mauro",
+        "sobrenome": "Bertuol",
+        "idade": 32,
+        "altura": 1.95,
+        "peso": 113
+    }
+}
