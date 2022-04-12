@@ -17,3 +17,5 @@ Na pasta _projetos_ ficam os projetos que foram realizados no curso, são ativid
 ## Validador e Gerar de CNPJ
 
 ## Cálculo de IPv4
+
+## Calculadora em PyQt5
