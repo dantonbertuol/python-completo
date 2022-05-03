@@ -15,7 +15,8 @@ class Contato(models.Model):
     email = models.CharField(max_length=255, blank=True) # Campo tipo string com tamanho máximo 255, opcional (pode ser blank)
     data_criacao = models.DateTimeField(default=timezone.now) # Campo tipo DateTime com o valor default
     descricao = models.TextField(blank=True) # Campo tipo Texto
-    categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING)
+    categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING) # FK para o Model Categoria
+    mostrar = models.BooleanField(default=True) # Campo Booleano (T ou F)
 
     def __str__(self):
         return self.nome
