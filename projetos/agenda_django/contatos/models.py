@@ -17,6 +17,7 @@ class Contato(models.Model):
     descricao = models.TextField(blank=True) # Campo tipo Texto
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING) # FK para o Model Categoria
     mostrar = models.BooleanField(default=True) # Campo Booleano (T ou F)
+    foto = models.ImageField(blank=True, upload_to=r'fotos/%Y/%m/%d') # Campo no formato imagem não obrigatório e o caminho
 
     def __str__(self):
         return self.nome
