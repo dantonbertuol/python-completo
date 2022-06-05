@@ -17,6 +17,7 @@ class PostIndex(ListView):
     # Manipula a query padrão 
     def get_queryset(self):
         qs = super().get_queryset()
+        qs = qs.select_related('categoria_post')
         qs = qs.order_by('-id').filter(publicado_post = True) #ordena pelo id de forma descrescente e filtra os posts publicados
         qs = qs.annotate(
             numero_comentarios = Count(
