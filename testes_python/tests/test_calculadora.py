@@ -1,3 +1,19 @@
+# Esse try except serve para eu manipular o caminho onde irá buscar as classes (Calculadora por exemplo)
+try:
+    import sys
+    import os
+
+    sys.path.append(
+        os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                '../src'
+            )
+        )
+    )
+except:
+    raise
+
 import unittest
 from calculadora import soma
 
@@ -35,4 +51,5 @@ class TestCalculadora(unittest.TestCase):
         with self.assertRaises(AssertionError):
             soma(11, '11')
 
-unittest.main(verbosity=2)
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

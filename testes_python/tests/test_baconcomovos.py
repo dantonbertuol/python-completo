@@ -10,6 +10,22 @@ Parte 2 - Criar o código e ver o teste passar
 Refactor (Ciclo do TDD)
 Parte 3 - Melhorar meu código
 """
+# Esse try except serve para eu manipular o caminho onde irá buscar as classes (BaconComOvos por exemplo)
+try:
+    import sys
+    import os
+
+    sys.path.append(
+        os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                '../src'
+            )
+        )
+    )
+except:
+    raise
+
 import unittest
 from baconcomovos import bacon_com_ovos
 
@@ -50,4 +66,5 @@ class TesteBaconComOvos(unittest.TestCase):
             with self.subTest(entrada=entrada, saida=saida):
                 self.assertEqual(bacon_com_ovos(entrada), saida, msg=f'{entrada} não retornou "{saida}".')
 
-unittest.main(verbosity=2)
+if __name__ == '__main__':
+    unittest.main(verbosity=2)
