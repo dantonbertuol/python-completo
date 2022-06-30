@@ -1,19 +1,41 @@
-from email import message
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.contrib import messages
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views import View
 from django.http import HttpResponse
+from django.contrib import messages
+from django.db.models import Q
+
 from . import models
-from pprint import pprint
+from perfil.models import Perfil
 
 
 class ListaProdutos(ListView):
     model = models.Produto
     template_name = 'produto/lista.html'
     context_object_name = 'produtos'
-    paginate_by = 2
+    paginate_by = 10
+    ordering = ['-id']
+
+
+class Busca(ListaProdutos):
+    def get_queryset(self, *args, **kwargs):
+        termo = self.request.GET.get('termo') or self.request.session['termo']
+        qs = super().get_queryset(*args, **kwargs)
+
+        if not termo:
+            return qs
+
+        self.request.session['termo'] = termo
+
+        qs = qs.filter(
+            Q(nome__icontains=termo) |
+            Q(descricao_curta__icontains=termo) |
+            Q(descricao_longa__icontains=termo)
+        )
+
+        self.request.session.save()
+        return qs
 
 
 class DetalheProduto(DetailView):
@@ -24,16 +46,11 @@ class DetalheProduto(DetailView):
 
 
 class AdicionarAoCarrinho(View):
-    # Utiliza get pois o formulario eh get se nao seria post o metodo
     def get(self, *args, **kwargs):
-        # Se precisar destruir o carrinno e iniciar novamente
-        # if self.request.session.get('carrinho'):
-        #     del self.request.session['carrinho']
-        #     self.request.session.save()
-
-        # Url de onde o cliente veio HTTP_REFERER
         http_referer = self.request.META.get(
-            'HTTP_REFERER', reverse('produto:lista'))
+            'HTTP_REFERER',
+            reverse('produto:lista')
+        )
         variacao_id = self.request.GET.get('vid')
 
         if not variacao_id:
@@ -41,7 +58,6 @@ class AdicionarAoCarrinho(View):
                 self.request,
                 'Produto não existe'
             )
-            # Direciona o cliente de onde ele veio com o metodo HTTP_REFERER
             return redirect(http_referer)
 
         variacao = get_object_or_404(models.Variacao, id=variacao_id)
@@ -62,21 +78,19 @@ class AdicionarAoCarrinho(View):
         else:
             imagem = ''
 
-        if variacao_estoque < 1:
-            messages.error(self.request, 'Estoque insuficiente.')
+        if variacao.estoque < 1:
+            messages.error(
+                self.request,
+                'Estoque insuficiente'
+            )
             return redirect(http_referer)
 
-        # Verifica se tem a chave carrinho na sessão
         if not self.request.session.get('carrinho'):
-            # Se não existir cria com o nome carrinho (é um dicionario)
             self.request.session['carrinho'] = {}
-            # Salva a sessão
             self.request.session.save()
 
-        # Dicionario da sessao salvo na variavel carrinho
         carrinho = self.request.session['carrinho']
 
-        # Se a variação já existe no carrinho
         if variacao_id in carrinho:
             quantidade_carrinho = carrinho[variacao_id]['quantidade']
             quantidade_carrinho += 1
@@ -85,7 +99,7 @@ class AdicionarAoCarrinho(View):
                 messages.warning(
                     self.request,
                     f'Estoque insuficiente para {quantidade_carrinho}x no '
-                    f'produto {produto_nome}. Adicionamos {variacao_estoque}x '
+                    f'produto "{produto_nome}". Adicionamos {variacao_estoque}x '
                     f'no seu carrinho.'
                 )
                 quantidade_carrinho = variacao_estoque
@@ -95,7 +109,6 @@ class AdicionarAoCarrinho(View):
                 quantidade_carrinho
             carrinho[variacao_id]['preco_quantitativo_promocional'] = preco_unitario_promocional * \
                 quantidade_carrinho
-
         else:
             carrinho[variacao_id] = {
                 'produto_id': produto_id,
@@ -106,9 +119,9 @@ class AdicionarAoCarrinho(View):
                 'preco_unitario_promocional': preco_unitario_promocional,
                 'preco_quantitativo': preco_unitario,
                 'preco_quantitativo_promocional': preco_unitario_promocional,
-                'quantidade': quantidade,
+                'quantidade': 1,
                 'slug': slug,
-                'imagem': imagem
+                'imagem': imagem,
             }
 
         self.request.session.save()
@@ -116,7 +129,7 @@ class AdicionarAoCarrinho(View):
         messages.success(
             self.request,
             f'Produto {produto_nome} {variacao_nome} adicionado ao seu '
-            'carrinho.'
+            f'carrinho {carrinho[variacao_id]["quantidade"]}x.'
         )
 
         return redirect(http_referer)
@@ -124,13 +137,13 @@ class AdicionarAoCarrinho(View):
 
 class RemoverDoCarrinho(View):
     def get(self, *args, **kwargs):
-        # Url de onde o cliente veio HTTP_REFERER
         http_referer = self.request.META.get(
-            'HTTP_REFERER', reverse('produto:lista'))
+            'HTTP_REFERER',
+            reverse('produto:lista')
+        )
         variacao_id = self.request.GET.get('vid')
 
         if not variacao_id:
-            # Direciona o cliente de onde ele veio com o metodo HTTP_REFERER
             return redirect(http_referer)
 
         if not self.request.session.get('carrinho'):
@@ -148,9 +161,7 @@ class RemoverDoCarrinho(View):
         )
 
         del self.request.session['carrinho'][variacao_id]
-
         self.request.session.save()
-
         return redirect(http_referer)
 
 
@@ -159,9 +170,34 @@ class Carrinho(View):
         contexto = {
             'carrinho': self.request.session.get('carrinho', {})
         }
+
         return render(self.request, 'produto/carrinho.html', contexto)
 
 
 class ResumoDaCompra(View):
     def get(self, *args, **kwargs):
-        return HttpResponse('Finalizar')
+        if not self.request.user.is_authenticated:
+            return redirect('perfil:criar')
+
+        perfil = Perfil.objects.filter(usuario=self.request.user).exists()
+
+        if not perfil:
+            messages.error(
+                self.request,
+                'Usuário sem perfil.'
+            )
+            return redirect('perfil:criar')
+
+        if not self.request.session.get('carrinho'):
+            messages.error(
+                self.request,
+                'Carrinho vazio.'
+            )
+            return redirect('produto:lista')
+
+        contexto = {
+            'usuario': self.request.user,
+            'carrinho': self.request.session['carrinho'],
+        }
+
+        return render(self.request, 'produto/resumodacompra.html', contexto)
