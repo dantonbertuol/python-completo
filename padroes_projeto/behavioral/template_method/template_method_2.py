@@ -44,10 +44,10 @@ class Pizza(ABC):
 
 class AModa(Pizza):
     def add_ingrentients(self) -> None:
-        print(f'AModa - adicionando ingredientes: presunto, queijo, goiabada')
+        print('AModa - adicionando ingredientes: presunto, queijo, goiabada')
 
     def cook(self) -> None:
-        print(f'AModa - cozinhado por 45min no forno a lenha')
+        print('AModa - cozinhado por 45min no forno a lenha')
 
 
 class Veg(Pizza):
@@ -55,10 +55,10 @@ class Veg(Pizza):
         print('Veg - Lavando ingredientes')
 
     def add_ingrentients(self) -> None:
-        print(f'Veg - adicionando ingredientes: ingredientes veganos')
+        print('Veg - adicionando ingredientes: ingredientes veganos')
 
     def cook(self) -> None:
-        print(f'Veg - cozinhado por 5min no forno comum')
+        print('Veg - cozinhado por 5min no forno comum')
 
 
 if __name__ == "__main__":
