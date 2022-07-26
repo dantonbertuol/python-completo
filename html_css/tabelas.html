@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabelas</title>
+
+    <style>
+        body{
+            font-family: sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 800px;
+        }
+
+        table td, table th{
+            border: 1px solid #ccc;
+            padding: 5px;
+            text-align: left;
+        }
+
+        table caption {
+            caption-side: bottom;
+            text-align: center;
+            font-style: italic;
+            font-size: 14px;
+            margin-top: 5px 0;
+        }
+
+        tfoot td, table th {
+            background: #ddd;
+        }
+
+        tfoot td {
+            font-style: italic;
+        }
+
+        .responsive-table{
+            width: 100%;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+        Título da Tabela
+    </p>
+    <div class="responsive-table">
+        <table>
+            <caption>Uma descrição para a tabela</caption>
+            <thead> <!-- Cabeçalho da Tabela -->
+                <tr> <!-- Linha da tabela [título] -->
+                    <th>Título 1</th> <!-- Título da coluna -->
+                    <th>Título 2</th> <!-- Título da coluna -->
+                    <th>Título 3</th> <!-- Título da coluna -->
+                </tr>
+            </thead>
+
+            <tbody> <!-- Corpo da Tabela -->
+                <tr> <!-- Linha da Tabela [valor] -->
+                    <td>Corpo 1</td> <!-- Valor da coluna -->
+                    <td>Corpo 2</td> <!-- Valor da coluna -->
+                    <td>Corpo 3</td> <!-- Valor da coluna -->
+                </tr>
+                <tr> <!-- Linha da Tabela [valor] -->
+                    <td colspan="2">Corpo 1</td> <!-- Valor da coluna mesclado com 2 colunas e 2linhas -->
+                    <td>Corpo 3</td> <!-- Valor da coluna -->
+                </tr>
+                <tr> <!-- Linha da Tabela [valor] -->
+                    <td>Corpo 1</td> <!-- Valor da coluna -->
+                    <td>Corpo 2</td> <!-- Valor da coluna -->
+                    <td>Corpo 3</td> <!-- Valor da coluna -->
+                </tr>
+            </tbody>
+            
+            <tfoot><!-- Rodapé da Tabela (última linha) -->
+                <tr> <!-- Linha da Tabela [rodapé] -->
+                    <td colspan="2" rowspan="2"></td> <!-- Valor da coluna -->
+                    <td>TOTAL: </td> <!-- Valor da coluna -->
+                </tr>
+                <tr> <!-- Linha da Tabela [rodapé] -->
+                    <td>R$ 555</td> <!-- Valor da coluna -->
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+
+</html>
