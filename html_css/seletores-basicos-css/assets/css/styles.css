@@ -44,3 +44,94 @@ body div section h1 {
 .main-content > .lorem {
     font-style: italic;
 }
+
+/* Seleção por irmãos - apenas o próximo depois de h1*/
+.pai h1+p {
+    color: red;
+}
+
+/* Seleção por irmãos - todos depois de h1*/
+.pai h1~p {
+    color: red;
+}
+
+/* Seleção por atributos personalizado*/
+[meu-atributo = "valor"] {
+    color: green;
+}
+
+/* Seleção por atributos padrão*/
+[checked] {
+    color: blue;
+}
+
+/* Seleção por atributos - deve conter um valor teste*/
+[meu-atributo ~= "teste"] {
+    color: blue;
+}
+
+/* Seleção por atributos - deve começar com valor teste seguido de traço [-]*/
+[meu-atributo |= "teste"] {
+    color: blue;
+}
+
+/* Seleção por atributos - deve começar com valor teste*/
+[meu-atributo ^= "teste"] {
+    color: blue;
+}
+
+/* Seleção por atributos - deve terminar com valor teste*/
+[meu-atributo $= "teste"] {
+    color: blue;
+}
+
+/* Seleção por atributos - deve conter o valor teste*/
+[meu-atributo *= "teste"] {
+    color: blue;
+}
+
+/* Todo elemento dentro da tag efeitos de transição */
+.heading {
+    transition: all 1s ease-in-out;
+}
+
+/* Seleção por pseudo-classes - quando passa o mouse*/
+.heading:hover{
+    background: gray;
+}
+
+a {
+    color: purple;
+}
+
+/*Pseudo-classe de link nunca visitado*/
+a:link {
+    color: deeppink;
+}
+
+/*Pseudo-classe de link visitado*/
+a:visited {
+    color: blue;
+}
+
+/*Pseudo-classe de link clicado*/
+a:active {
+    color: yellow;
+}
+
+/*Pseudo-classe em foco*/
+input:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    outline: none;
+    border: 1 px solid black;
+}
+
+/*Pseudo-classe mudando outro elemento*/
+input:checked + p {
+    background: red;
+}
+
+/*Pseudo-classe para elementos obrigatórios*/
+input:required {
+    background: red;
+}
