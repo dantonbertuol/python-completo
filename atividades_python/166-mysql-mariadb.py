@@ -3,6 +3,7 @@ from contextlib import contextmanager
 
 # CRUD - CREATE, READ, UPDATE, DELETE
 
+
 @contextmanager
 def conecta():
     conexao = pymysql.connect(
@@ -15,13 +16,14 @@ def conecta():
     )
 
     try:
-        yield conexao # Retorna e "permanece" até que finalize
+        yield conexao  # Retorna e "permanece" até que finalize
     finally:
         conexao.close()
 
+
 # INSERE UM REGISTRO NA BASE DE DADOS
-with conecta() as conexao: # Gerenciador de contexto para fechar automaticamente a conexão
-    with conexao.cursor() as cursor: # Gerenciador de contexto para fechar automaticamente o cursor
+with conecta() as conexao:  # Gerenciador de contexto para fechar automaticamente a conexão
+    with conexao.cursor() as cursor:  # Gerenciador de contexto para fechar automaticamente o cursor
         sql = 'INSERT INTO clientes (nome, sobrenome, idade, peso) VALUES ' \
               '(%s, %s, %s, %s)'
         cursor.execute(sql, ('Jack', 'Monroe', 112, 220))
